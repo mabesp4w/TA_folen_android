@@ -23,7 +23,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.18:3000\"")
+            buildConfigField("String", "API_KEY", "\"aeQRYBCWAPQLtpggJOhAWgFpKeXlM_7naB9lb7QIQ_U\"")
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"https://syaloom.satgar.my.id\"")
+            buildConfigField("String", "API_KEY", "\"aeQRYBCWAPQLtpggJOhAWgFpKeXlM_7naB9lb7QIQ_U\"")
             optimization {
                 enable = false
             }
@@ -35,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -42,6 +49,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
