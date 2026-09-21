@@ -7,14 +7,12 @@ import com.example.appandroid.data.local.dao.JadwalDao
 import com.example.appandroid.data.local.dao.PengumumanDao
 import com.example.appandroid.data.local.dao.RayonDao
 import com.example.appandroid.data.local.dao.RenunganDao
-import com.example.appandroid.data.local.dao.SlideDao
 import com.example.appandroid.data.local.dao.UnsurDao
 import com.example.appandroid.data.local.entity.AlbumEntity
 import com.example.appandroid.data.local.entity.JadwalEntity
 import com.example.appandroid.data.local.entity.PengumumanEntity
 import com.example.appandroid.data.local.entity.RayonEntity
 import com.example.appandroid.data.local.entity.RenunganEntity
-import com.example.appandroid.data.local.entity.SlideEntity
 import com.example.appandroid.data.local.entity.UnsurEntity
 
 @Database(
@@ -23,11 +21,10 @@ import com.example.appandroid.data.local.entity.UnsurEntity
         JadwalEntity::class,
         PengumumanEntity::class,
         AlbumEntity::class,
-        SlideEntity::class,
         RayonEntity::class,
         UnsurEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 abstract class ChurchDatabase : RoomDatabase() {
@@ -35,7 +32,6 @@ abstract class ChurchDatabase : RoomDatabase() {
     abstract fun jadwalDao(): JadwalDao
     abstract fun pengumumanDao(): PengumumanDao
     abstract fun albumDao(): AlbumDao
-    abstract fun slideDao(): SlideDao
     abstract fun rayonDao(): RayonDao
     abstract fun unsurDao(): UnsurDao
 }

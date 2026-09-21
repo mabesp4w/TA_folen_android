@@ -5,7 +5,6 @@ import com.example.appandroid.data.local.entity.JadwalEntity
 import com.example.appandroid.data.local.entity.PengumumanEntity
 import com.example.appandroid.data.local.entity.RayonEntity
 import com.example.appandroid.data.local.entity.RenunganEntity
-import com.example.appandroid.data.local.entity.SlideEntity
 import com.example.appandroid.data.local.entity.UnsurEntity
 
 fun RenunganDto.toEntity() = RenunganEntity(
@@ -45,16 +44,6 @@ fun AlbumDto.toEntity() = AlbumEntity(
     tgl = tgl,
     jumlahFoto = jumlah_foto,
     sampul = sampul,
-)
-
-fun SlideDto.toEntity() = SlideEntity(
-    id = id,
-    order = order,
-    url = url,
-    judul = judul,
-    teks = teks,
-    linkUrl = link_url,
-    linkTeks = link_teks,
 )
 
 fun RayonDto.toEntity() = RayonEntity(

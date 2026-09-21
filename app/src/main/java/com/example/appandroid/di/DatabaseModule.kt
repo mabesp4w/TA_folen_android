@@ -8,7 +8,6 @@ import com.example.appandroid.data.local.dao.JadwalDao
 import com.example.appandroid.data.local.dao.PengumumanDao
 import com.example.appandroid.data.local.dao.RayonDao
 import com.example.appandroid.data.local.dao.RenunganDao
-import com.example.appandroid.data.local.dao.SlideDao
 import com.example.appandroid.data.local.dao.UnsurDao
 import dagger.Module
 import dagger.Provides
@@ -34,7 +33,6 @@ object DatabaseModule {
     @Provides fun provideJadwalDao(db: ChurchDatabase): JadwalDao = db.jadwalDao()
     @Provides fun providePengumumanDao(db: ChurchDatabase): PengumumanDao = db.pengumumanDao()
     @Provides fun provideAlbumDao(db: ChurchDatabase): AlbumDao = db.albumDao()
-    @Provides fun provideSlideDao(db: ChurchDatabase): SlideDao = db.slideDao()
     @Provides fun provideRayonDao(db: ChurchDatabase): RayonDao = db.rayonDao()
     @Provides fun provideUnsurDao(db: ChurchDatabase): UnsurDao = db.unsurDao()
 }

@@ -7,7 +7,6 @@ import com.example.appandroid.data.remote.dto.JadwalDto
 import com.example.appandroid.data.remote.dto.PengumumanDto
 import com.example.appandroid.data.remote.dto.RayonDto
 import com.example.appandroid.data.remote.dto.RenunganDto
-import com.example.appandroid.data.remote.dto.SlideDto
 import com.example.appandroid.data.remote.dto.UnsurDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -53,9 +52,6 @@ interface ChurchApiService {
     suspend fun getAlbumDetail(
         @Path("id") id: String,
     ): ApiResponse<AlbumDetailDto>
-
-    @GET("api/public/slide")
-    suspend fun getSlideList(): ApiResponse<List<SlideDto>>
 
     @GET("api/public/rayon")
     suspend fun getRayonList(): ApiResponse<List<RayonDto>>
