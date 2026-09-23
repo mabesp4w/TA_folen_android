@@ -20,6 +20,20 @@ object Routes {
     const val RENUNGAN = "renungan"
     const val WARTA = "warta"
     const val LAINNYA = "lainnya"
+    const val RAYON = "rayon"
+    const val UNSUR = "unsur"
+    const val JEMAAT = "jemaat"
+    const val PENDETA = "pendeta"
+    const val MAJELIS = "majelis"
+    const val PENGURUS = "pengurus"
+    const val KEHADIRAN = "kehadiran"
+    const val KEUANGAN = "keuangan"
+    const val PENGATURAN = "pengaturan"
+    const val TENTANG = "tentang"
+    const val GALERI = "galeri"
+    const val GALERI_DETAIL = "galeri/{id}"
+
+    fun galeriDetail(id: String) = "galeri/$id"
 }
 
 // Item yang tampil pada bottom navigation bar.

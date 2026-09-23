@@ -26,9 +26,21 @@ import com.example.appandroid.ui.navigation.Routes
 import com.example.appandroid.ui.navigation.TopLevelDestination
 import com.example.appandroid.ui.screen.DashboardScreen
 import com.example.appandroid.ui.screen.FeatureScreen
+import com.example.appandroid.ui.screen.GaleriDetailScreen
+import com.example.appandroid.ui.screen.GaleriScreen
 import com.example.appandroid.ui.screen.JadwalScreen
+import com.example.appandroid.ui.screen.JemaatScreen
+import com.example.appandroid.ui.screen.KehadiranScreen
+import com.example.appandroid.ui.screen.KeuanganScreen
 import com.example.appandroid.ui.screen.LainnyaScreen
+import com.example.appandroid.ui.screen.MajelisScreen
+import com.example.appandroid.ui.screen.PendetaScreen
+import com.example.appandroid.ui.screen.PengaturanScreen
+import com.example.appandroid.ui.screen.PengurusScreen
+import com.example.appandroid.ui.screen.RayonScreen
 import com.example.appandroid.ui.screen.RenunganScreen
+import com.example.appandroid.ui.screen.TentangScreen
+import com.example.appandroid.ui.screen.UnsurScreen
 import com.example.appandroid.ui.screen.WartaScreen
 
 private const val FEATURE_ROUTE = "fitur"
@@ -39,6 +51,24 @@ fun ChurchApp() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
     val topLevel = TopLevelDestination.entries
+
+    // Sebagian menu punya layar khusus; sisanya memakai layar placeholder generik.
+    val openMenu: (String) -> Unit = { id ->
+        when (id) {
+            Routes.RAYON -> navController.navigate(Routes.RAYON)
+            Routes.UNSUR -> navController.navigate(Routes.UNSUR)
+            Routes.JEMAAT -> navController.navigate(Routes.JEMAAT)
+            Routes.PENDETA -> navController.navigate(Routes.PENDETA)
+            Routes.MAJELIS -> navController.navigate(Routes.MAJELIS)
+            Routes.PENGURUS -> navController.navigate(Routes.PENGURUS)
+            Routes.KEHADIRAN -> navController.navigate(Routes.KEHADIRAN)
+            Routes.KEUANGAN -> navController.navigate(Routes.KEUANGAN)
+            Routes.PENGATURAN -> navController.navigate(Routes.PENGATURAN)
+            Routes.TENTANG -> navController.navigate(Routes.TENTANG)
+            Routes.GALERI -> navController.navigate(Routes.GALERI)
+            else -> navController.navigateToFeature(id)
+        }
+    }
 
     // Bottom bar hanya tampil pada rute utama, tidak pada halaman detail fitur.
     val showBottomBar = currentDestination?.hierarchy?.any { dest ->
@@ -99,11 +129,11 @@ fun ChurchApp() {
         ) {
             composable(Routes.BERANDA) {
                 DashboardScreen(
-                    onMenuClick = { navController.navigateToFeature(it) },
+                    onMenuClick = openMenu,
                     onLihatJadwal = { navController.navigate(Routes.JADWAL) },
                     onLihatRenungan = { navController.navigate(Routes.RENUNGAN) },
                     onLihatWarta = { navController.navigate(Routes.WARTA) },
-                    onLihatGaleri = { navController.navigateToFeature("galeri") },
+                    onLihatGaleri = { navController.navigate(Routes.GALERI) },
                     contentPadding = innerPadding,
                 )
             }
@@ -112,7 +142,81 @@ fun ChurchApp() {
             composable(Routes.WARTA) { WartaScreen(contentPadding = innerPadding) }
             composable(Routes.LAINNYA) {
                 LainnyaScreen(
-                    onItemClick = { navController.navigateToFeature(it) },
+                    onItemClick = openMenu,
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.RAYON) {
+                RayonScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.UNSUR) {
+                UnsurScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.JEMAAT) {
+                JemaatScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.PENDETA) {
+                PendetaScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.MAJELIS) {
+                MajelisScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.PENGURUS) {
+                PengurusScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.KEHADIRAN) {
+                KehadiranScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.KEUANGAN) {
+                KeuanganScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.PENGATURAN) {
+                PengaturanScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenTentang = { navController.navigate(Routes.TENTANG) },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.TENTANG) {
+                TentangScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.GALERI) {
+                GaleriScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenAlbum = { id -> navController.navigate(Routes.galeriDetail(id)) },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.GALERI_DETAIL) {
+                GaleriDetailScreen(
+                    onBack = { navController.popBackStack() },
                     contentPadding = innerPadding,
                 )
             }

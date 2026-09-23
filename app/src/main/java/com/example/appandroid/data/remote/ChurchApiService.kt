@@ -3,7 +3,13 @@ package com.example.appandroid.data.remote
 import com.example.appandroid.data.remote.dto.AlbumDetailDto
 import com.example.appandroid.data.remote.dto.AlbumDto
 import com.example.appandroid.data.remote.dto.ApiResponse
+import com.example.appandroid.data.remote.dto.BadanPengurusDto
 import com.example.appandroid.data.remote.dto.JadwalDto
+import com.example.appandroid.data.remote.dto.JemaatDto
+import com.example.appandroid.data.remote.dto.KehadiranDto
+import com.example.appandroid.data.remote.dto.KeuanganDto
+import com.example.appandroid.data.remote.dto.MajelisDto
+import com.example.appandroid.data.remote.dto.PendetaDto
 import com.example.appandroid.data.remote.dto.PengumumanDto
 import com.example.appandroid.data.remote.dto.RayonDto
 import com.example.appandroid.data.remote.dto.RenunganDto
@@ -58,4 +64,31 @@ interface ChurchApiService {
 
     @GET("api/public/unsur")
     suspend fun getUnsurList(): ApiResponse<List<UnsurDto>>
+
+    @GET("api/public/jemaat")
+    suspend fun getJemaatList(
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 100,
+    ): ApiResponse<List<JemaatDto>>
+
+    @GET("api/public/pendeta")
+    suspend fun getPendetaList(): ApiResponse<List<PendetaDto>>
+
+    @GET("api/public/majelis")
+    suspend fun getMajelisList(): ApiResponse<List<MajelisDto>>
+
+    @GET("api/public/badan-pengurus")
+    suspend fun getBadanPengurusList(): ApiResponse<List<BadanPengurusDto>>
+
+    @GET("api/public/kehadiran")
+    suspend fun getKehadiranList(
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 100,
+    ): ApiResponse<List<KehadiranDto>>
+
+    @GET("api/public/keuangan")
+    suspend fun getKeuanganList(
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 200,
+    ): ApiResponse<List<KeuanganDto>>
 }

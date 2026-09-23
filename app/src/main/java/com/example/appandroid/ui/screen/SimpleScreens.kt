@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -21,21 +22,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +43,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.appandroid.ui.component.Eyebrow
@@ -56,7 +55,11 @@ import com.example.appandroid.ui.theme.Brand
 
 // Header bergradien yang dipakai ulang pada layar selain dashboard.
 @Composable
-fun ScreenHeader(title: String, subtitle: String) {
+fun ScreenHeader(
+    title: String,
+    subtitle: String,
+    onBack: (() -> Unit)? = null,
+) {
     val statusTop = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
     Box(
         modifier = Modifier
@@ -66,6 +69,19 @@ fun ScreenHeader(title: String, subtitle: String) {
             .padding(start = 20.dp, end = 20.dp, top = 22.dp, bottom = 22.dp),
     ) {
         Column {
+            if (onBack != null) {
+                IconButton(
+                    onClick = onBack,
+                    modifier = Modifier.offset(x = (-12).dp).size(38.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Kembali",
+                        tint = Color.White,
+                    )
+                }
+                Spacer(Modifier.height(6.dp))
+            }
             Text(
                 text = title,
                 style = MaterialTheme.typography.headlineSmall,
@@ -80,62 +96,6 @@ fun ScreenHeader(title: String, subtitle: String) {
         }
     }
 }
-
-// Layar sederhana dengan header + empty state (untuk tab yang datanya menyusul).
-@Composable
-private fun ComingSoonScreen(
-    title: String,
-    subtitle: String,
-    icon: ImageVector,
-    emptyTitle: String,
-    emptyMessage: String,
-    contentPadding: PaddingValues,
-) {
-    Column(Modifier.fillMaxSize()) {
-        ScreenHeader(title, subtitle)
-        Box(
-            modifier = Modifier.fillMaxSize().padding(bottom = contentPadding.calculateBottomPadding()),
-            contentAlignment = Alignment.Center,
-        ) {
-            EmptyState(
-                icon = icon,
-                title = emptyTitle,
-                message = emptyMessage,
-                modifier = Modifier.padding(horizontal = 32.dp),
-            )
-        }
-    }
-}
-
-@Composable
-fun JadwalScreen(contentPadding: PaddingValues) = ComingSoonScreen(
-    title = "Jadwal Ibadah",
-    subtitle = "Jadwal ibadah minggu ini dan mendatang",
-    icon = Icons.Filled.DateRange,
-    emptyTitle = "Jadwal segera hadir",
-    emptyMessage = "Daftar lengkap jadwal ibadah akan tampil di sini setelah terhubung ke data.",
-    contentPadding = contentPadding,
-)
-
-@Composable
-fun RenunganScreen(contentPadding: PaddingValues) = ComingSoonScreen(
-    title = "Renungan Harian",
-    subtitle = "Santapan rohani setiap hari",
-    icon = Icons.Filled.Favorite,
-    emptyTitle = "Renungan segera hadir",
-    emptyMessage = "Arsip renungan harian akan tampil di sini setelah terhubung ke data.",
-    contentPadding = contentPadding,
-)
-
-@Composable
-fun WartaScreen(contentPadding: PaddingValues) = ComingSoonScreen(
-    title = "Warta Jemaat",
-    subtitle = "Pengumuman dan informasi gereja",
-    icon = Icons.Filled.Notifications,
-    emptyTitle = "Warta segera hadir",
-    emptyMessage = "Warta dan pengumuman jemaat akan tampil di sini setelah terhubung ke data.",
-    contentPadding = contentPadding,
-)
 
 // Menu lengkap pada tab "Lainnya".
 private data class LainnyaGroup(val title: String, val items: List<MenuItem>)

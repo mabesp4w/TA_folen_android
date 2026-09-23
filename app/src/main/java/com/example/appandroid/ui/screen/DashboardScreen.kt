@@ -284,7 +284,7 @@ private fun GreetingHeader(
                     Eyebrow("GKI Syaloom Pasifik Indah", color = Brand.GoldSoft)
                     Spacer(Modifier.height(6.dp))
                     Text(
-                        text = "Selamat datang 👋",
+                        text = "Selamat datang",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White,
                     )
