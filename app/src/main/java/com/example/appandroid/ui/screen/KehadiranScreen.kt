@@ -73,12 +73,6 @@ fun KehadiranScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (kehadiranList.isNotEmpty()) {
-                        item {
-                            KehadiranSummary(
-                                ibadahCount = kehadiranList.size,
-                                totalHadir = kehadiranList.sumOf { it.total },
-                            )
-                        }
                         items(kehadiranList, key = { it.id }) { item ->
                             KehadiranCard(item = item)
                         }
@@ -119,39 +113,6 @@ fun KehadiranScreen(
     }
 }
 
-@Composable
-private fun KehadiranSummary(
-    ibadahCount: Int,
-    totalHadir: Int,
-    modifier: Modifier = Modifier,
-) {
-    PaperCard(modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = Icons.Filled.CheckCircle,
-                contentDescription = null,
-                size = 44,
-            )
-            Spacer(Modifier.width(14.dp))
-            Column {
-                Text(
-                    text = "$ibadahCount ibadah",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Total $totalHadir jemaat hadir (tercatat)",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-    }
-}
 // __CARD__
 
 @Composable

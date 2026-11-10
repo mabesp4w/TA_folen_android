@@ -38,6 +38,7 @@ import com.example.appandroid.ui.screen.PendetaScreen
 import com.example.appandroid.ui.screen.PengaturanScreen
 import com.example.appandroid.ui.screen.PengurusScreen
 import com.example.appandroid.ui.screen.RayonScreen
+import com.example.appandroid.ui.screen.RenunganDetailScreen
 import com.example.appandroid.ui.screen.RenunganScreen
 import com.example.appandroid.ui.screen.TentangScreen
 import com.example.appandroid.ui.screen.UnsurScreen
@@ -138,7 +139,12 @@ fun ChurchApp() {
                 )
             }
             composable(Routes.JADWAL) { JadwalScreen(contentPadding = innerPadding) }
-            composable(Routes.RENUNGAN) { RenunganScreen(contentPadding = innerPadding) }
+            composable(Routes.RENUNGAN) {
+                RenunganScreen(
+                    contentPadding = innerPadding,
+                    onOpenDetail = { id -> navController.navigate(Routes.renunganDetail(id)) },
+                )
+            }
             composable(Routes.WARTA) { WartaScreen(contentPadding = innerPadding) }
             composable(Routes.LAINNYA) {
                 LainnyaScreen(
@@ -216,6 +222,12 @@ fun ChurchApp() {
             }
             composable(Routes.GALERI_DETAIL) {
                 GaleriDetailScreen(
+                    onBack = { navController.popBackStack() },
+                    contentPadding = innerPadding,
+                )
+            }
+            composable(Routes.RENUNGAN_DETAIL) {
+                RenunganDetailScreen(
                     onBack = { navController.popBackStack() },
                     contentPadding = innerPadding,
                 )

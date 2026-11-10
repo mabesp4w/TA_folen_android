@@ -28,13 +28,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.appandroid.data.local.entity.RenunganEntity
 import com.example.appandroid.ui.component.EmptyState
-import com.example.appandroid.ui.component.IconBadge
+import com.example.appandroid.ui.component.HtmlText
 import com.example.appandroid.ui.component.PaperCard
 import com.example.appandroid.ui.component.StatusChip
 import com.example.appandroid.ui.theme.Brand
@@ -44,6 +43,7 @@ import com.example.appandroid.ui.theme.Brand
 fun RenunganScreen(
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
+    onOpenDetail: (String) -> Unit = {},
     viewModel: RenunganViewModel = hiltViewModel(),
 ) {
     val renunganList by viewModel.renunganList.collectAsState()
@@ -72,9 +72,11 @@ fun RenunganScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (renunganList.isNotEmpty()) {
-                        item { RenunganSummary(count = renunganList.size) }
                         items(renunganList, key = { it.id }) { renungan ->
-                            RenunganCard(renungan = renungan)
+                            RenunganCard(
+                                renungan = renungan,
+                                onClick = { onOpenDetail(renungan.id) },
+                            )
                         }
                     } else {
                         item {
@@ -113,38 +115,11 @@ fun RenunganScreen(
 }
 
 @Composable
-private fun RenunganSummary(count: Int) {
-    PaperCard(Modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = Icons.Filled.Favorite,
-                contentDescription = null,
-                size = 44,
-            )
-            Spacer(Modifier.width(14.dp))
-            Column {
-                Text(
-                    text = count.toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Renungan harian tersedia",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun RenunganCard(renungan: RenunganEntity) {
-    PaperCard(Modifier.fillMaxWidth()) {
+private fun RenunganCard(
+    renungan: RenunganEntity,
+    onClick: () -> Unit,
+) {
+    PaperCard(Modifier.fillMaxWidth().clickable(onClick = onClick)) {
         Column(Modifier.padding(16.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -161,7 +136,7 @@ private fun RenunganCard(renungan: RenunganEntity) {
                 if (!renungan.tglPublish.isNullOrBlank()) {
                     Spacer(Modifier.width(10.dp))
                     StatusChip(
-                        text = renungan.tglPublish,
+                        text = formatTanggalPublish(renungan.tglPublish),
                         dotColor = Brand.Gold,
                     )
                 }
@@ -189,8 +164,8 @@ private fun RenunganCard(renungan: RenunganEntity) {
                 ?: renungan.isi
             if (!preview.isNullOrBlank()) {
                 Spacer(Modifier.height(8.dp))
-                Text(
-                    text = preview,
+                HtmlText(
+                    html = preview,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 3,

@@ -49,6 +49,8 @@ class ChurchRepository @Inject constructor(
 ) {
     fun getRenunganTerbaru(): Flow<RenunganEntity?> = renunganDao.getTerbaru()
     fun getRenunganList(): Flow<List<RenunganEntity>> = renunganDao.getAll()
+
+    fun getRenunganById(id: String): Flow<RenunganEntity?> = renunganDao.getById(id)
     fun getJadwalMendatang(): Flow<List<JadwalEntity>> = jadwalDao.getMendatang(5)
     fun getJadwalList(): Flow<List<JadwalEntity>> = jadwalDao.getAll()
     fun getPengumumanTerbaru(): Flow<List<PengumumanEntity>> = pengumumanDao.getTerbaru(5)

@@ -32,14 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
 import com.example.appandroid.data.local.entity.AlbumEntity
 import com.example.appandroid.ui.component.EmptyState
-import com.example.appandroid.ui.component.IconBadge
 import com.example.appandroid.ui.component.PaperCard
 import com.example.appandroid.ui.icon.AppIcons
 import com.example.appandroid.ui.theme.Brand
@@ -82,12 +80,6 @@ fun GaleriScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (albumList.isNotEmpty()) {
-                        item(span = { GridItemSpan(maxLineSpan) }) {
-                            GaleriSummary(
-                                albumCount = albumList.size,
-                                fotoCount = albumList.sumOf { it.jumlahFoto },
-                            )
-                        }
                         items(albumList, key = { it.id }) { album ->
                             GaleriCard(album = album, onClick = { onOpenAlbum(album.id) })
                         }
@@ -122,35 +114,6 @@ fun GaleriScreen(
                 ) {
                     Text("Gagal memuat data. Periksa koneksi.")
                 }
-            }
-        }
-    }
-}
-@Composable
-private fun GaleriSummary(albumCount: Int, fotoCount: Int) {
-    PaperCard(Modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = AppIcons.Gallery,
-                contentDescription = null,
-                size = 44,
-            )
-            Spacer(Modifier.width(14.dp))
-            Column {
-                Text(
-                    text = albumCount.toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Album • $fotoCount foto kegiatan",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
             }
         }
     }

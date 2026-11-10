@@ -24,11 +24,11 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.18:3000\"")
+            buildConfigField("String", "BASE_URL", "\"https://syaloom.skripsi-uogp.my.id\"")
             buildConfigField("String", "API_KEY", "\"aeQRYBCWAPQLtpggJOhAWgFpKeXlM_7naB9lb7QIQ_U\"")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"https://syaloom.satgar.my.id\"")
+            buildConfigField("String", "BASE_URL", "\"https://syaloom.skripsi-uogp.my.id\"")
             buildConfigField("String", "API_KEY", "\"aeQRYBCWAPQLtpggJOhAWgFpKeXlM_7naB9lb7QIQ_U\"")
             optimization {
                 enable = false

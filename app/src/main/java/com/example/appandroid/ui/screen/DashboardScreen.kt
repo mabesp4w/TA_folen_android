@@ -62,6 +62,7 @@ import com.example.appandroid.data.local.entity.JadwalEntity
 import com.example.appandroid.data.local.entity.PengumumanEntity
 import com.example.appandroid.data.local.entity.RenunganEntity
 import com.example.appandroid.ui.component.Eyebrow
+import com.example.appandroid.ui.component.HtmlText
 import com.example.appandroid.ui.component.IconBadge
 import com.example.appandroid.ui.component.PaperCard
 import com.example.appandroid.ui.component.SectionHeader
@@ -85,14 +86,15 @@ private val quickMenu = listOf(
 )
 
 private val idLocale = Locale.of("id")
-private val dateDisplayFormatter = DateTimeFormatter.ofPattern("d MMM", idLocale)
+private val dateDisplayFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", idLocale)
 private val dayFormatter = DateTimeFormatter.ofPattern("EEEE", idLocale)
 
 private fun formatTanggal(tgl: String?): Pair<String, String> {
     if (tgl == null) return "--" to ""
     return try {
         val date = LocalDate.parse(tgl)
-        date.format(dateDisplayFormatter).split(" ", limit = 2).let {
+        // Badge kalender: angka hari di atas, bulan-tahun ("dd-MM-yyyy") di bawah.
+        date.format(dateDisplayFormatter).split("-", limit = 2).let {
             (it.getOrElse(0) { "--" }) to (it.getOrElse(1) { "" })
         }
     } catch (_: Exception) {
@@ -349,7 +351,7 @@ private fun FeaturedRenungan(
             ) {
                 Eyebrow("Renungan Hari Ini")
                 StatusChip(
-                    text = renungan.tglPublish ?: "",
+                    text = formatTanggalPublish(renungan.tglPublish),
                     dotColor = Brand.Gold,
                 )
             }
@@ -572,8 +574,8 @@ private fun WartaCard(item: PengumumanEntity) {
                 )
                 if (!item.isi.isNullOrBlank()) {
                     Spacer(Modifier.height(3.dp))
-                    Text(
-                        text = item.isi,
+                    HtmlText(
+                        html = item.isi,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 2,
@@ -582,7 +584,7 @@ private fun WartaCard(item: PengumumanEntity) {
                 }
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = item.tglPublish ?: "",
+                    text = formatTanggalPublish(item.tglPublish),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.secondary,
                 )

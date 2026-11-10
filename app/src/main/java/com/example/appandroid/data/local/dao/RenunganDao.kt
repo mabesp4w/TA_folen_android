@@ -14,6 +14,9 @@ interface RenunganDao {
     @Query("SELECT * FROM renungan ORDER BY tglPublish DESC")
     fun getAll(): Flow<List<RenunganEntity>>
 
+    @Query("SELECT * FROM renungan WHERE id = :id")
+    fun getById(id: String): Flow<RenunganEntity?>
+
     @Upsert
     suspend fun upsertAll(items: List<RenunganEntity>)
 

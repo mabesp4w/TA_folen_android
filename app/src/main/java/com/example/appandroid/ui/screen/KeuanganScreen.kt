@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.appandroid.data.local.entity.KeuanganEntity
 import com.example.appandroid.ui.component.EmptyState
-import com.example.appandroid.ui.component.IconBadge
 import com.example.appandroid.ui.component.PaperCard
 import com.example.appandroid.ui.component.StatusChip
 import com.example.appandroid.ui.theme.Brand
@@ -71,12 +70,6 @@ fun KeuanganScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (keuanganList.isNotEmpty()) {
-                        item {
-                            KeuanganSummary(
-                                count = keuanganList.size,
-                                totalNominal = keuanganList.sumOf { it.jumlah },
-                            )
-                        }
                         items(keuanganList, key = { it.id }) { item ->
                             KeuanganCard(item = item)
                         }
@@ -117,39 +110,6 @@ fun KeuanganScreen(
     }
 }
 
-@Composable
-private fun KeuanganSummary(
-    count: Int,
-    totalNominal: Long,
-    modifier: Modifier = Modifier,
-) {
-    PaperCard(modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = Icons.Filled.ShoppingCart,
-                contentDescription = null,
-                size = 44,
-            )
-            Spacer(Modifier.width(14.dp))
-            Column {
-                Text(
-                    text = formatRupiah(totalNominal),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Brand.Forest,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Total dari $count catatan terbaru",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-    }
-}
 // __CARD__
 
 @Composable

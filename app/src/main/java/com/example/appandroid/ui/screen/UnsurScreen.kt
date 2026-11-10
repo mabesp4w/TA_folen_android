@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.appandroid.data.local.entity.UnsurEntity
 import com.example.appandroid.ui.component.EmptyState
-import com.example.appandroid.ui.component.IconBadge
 import com.example.appandroid.ui.component.PaperCard
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,7 +71,6 @@ fun UnsurScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (unsurList.isNotEmpty()) {
-                        item { UnsurSummary(count = unsurList.size) }
                         itemsIndexed(unsurList, key = { _, item -> item.id }) { index, unsur ->
                             UnsurCard(number = index + 1, unsur = unsur)
                         }
@@ -112,35 +110,6 @@ fun UnsurScreen(
     }
 }
 
-@Composable
-private fun UnsurSummary(count: Int) {
-    PaperCard(Modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = Icons.AutoMirrored.Filled.List,
-                contentDescription = null,
-                size = 44,
-            )
-            Spacer(Modifier.width(14.dp))
-            Column {
-                Text(
-                    text = count.toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Unsur pelayanan terdaftar",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-    }
-}
 @Composable
 private fun UnsurCard(number: Int, unsur: UnsurEntity) {
     PaperCard(Modifier.fillMaxWidth()) {

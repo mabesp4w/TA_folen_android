@@ -38,21 +38,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.appandroid.data.local.entity.JadwalEntity
 import com.example.appandroid.ui.component.EmptyState
-import com.example.appandroid.ui.component.IconBadge
 import com.example.appandroid.ui.component.PaperCard
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 private val jadwalIdLocale = Locale.of("id")
-private val jadwalDateFormatter = DateTimeFormatter.ofPattern("d MMM", jadwalIdLocale)
+private val jadwalDateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", jadwalIdLocale)
 private val jadwalDayFormatter = DateTimeFormatter.ofPattern("EEEE", jadwalIdLocale)
 
 private fun formatJadwalTanggal(tgl: String?): Pair<String, String> {
     if (tgl == null) return "--" to ""
     return try {
         val date = LocalDate.parse(tgl)
-        date.format(jadwalDateFormatter).split(" ", limit = 2).let {
+        // Badge kalender: angka hari di atas, bulan-tahun ("dd-MM-yyyy") di bawah.
+        date.format(jadwalDateFormatter).split("-", limit = 2).let {
             (it.getOrElse(0) { "--" }) to (it.getOrElse(1) { "" })
         }
     } catch (_: Exception) {
@@ -102,7 +102,6 @@ fun JadwalScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (jadwalList.isNotEmpty()) {
-                        item { JadwalSummary(count = jadwalList.size) }
                         items(jadwalList, key = { it.id }) { jadwal ->
                             JadwalCard(jadwal = jadwal)
                         }
@@ -137,36 +136,6 @@ fun JadwalScreen(
                 },
             ) {
                 Text("Gagal memuat data. Periksa koneksi.")
-            }
-        }
-    }
-}
-
-@Composable
-private fun JadwalSummary(count: Int) {
-    PaperCard(Modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = Icons.Filled.DateRange,
-                contentDescription = null,
-                size = 44,
-            )
-            Spacer(Modifier.width(14.dp))
-            Column {
-                Text(
-                    text = count.toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Jadwal ibadah mendatang",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
             }
         }
     }

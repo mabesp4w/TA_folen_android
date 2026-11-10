@@ -5,16 +5,31 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-// Pemformat tanggal berbahasa Indonesia yang dipakai bersama oleh layar data orang.
-// Masukan berupa ISO "YYYY-MM-DD" dari API; keluaran "d MMM yyyy" (mis. "5 Jan 2020").
+// Pemformat tanggal yang dipakai bersama oleh layar-layar.
+// Masukan berupa ISO "YYYY-MM-DD" dari API; keluaran "dd-MM-yyyy" (mis. "05-01-2020").
 private val idLocaleTgl = Locale.of("id")
-private val tanggalFormatter = DateTimeFormatter.ofPattern("d MMM yyyy", idLocaleTgl)
+private val tanggalFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", idLocaleTgl)
 private val rupiahFormatter = NumberFormat.getInstance(idLocaleTgl)
 
 fun formatTanggalId(tgl: String?): String {
     if (tgl.isNullOrBlank()) return ""
     return try {
         LocalDate.parse(tgl).format(tanggalFormatter)
+    } catch (_: Exception) {
+        tgl
+    }
+}
+
+/**
+ * Format tanggal publikasi (warta/renungan) menjadi "dd-MM-yyyy".
+ * API bisa mengirim "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", atau ISO dengan "T";
+ * bagian jam dibuang. Jika tidak bisa diparse, teks asli dikembalikan apa adanya.
+ */
+fun formatTanggalPublish(tgl: String?): String {
+    if (tgl.isNullOrBlank()) return ""
+    return try {
+        val tanggalSaja = tgl.substringBefore(' ').substringBefore('T')
+        LocalDate.parse(tanggalSaja).format(tanggalFormatter)
     } catch (_: Exception) {
         tgl
     }

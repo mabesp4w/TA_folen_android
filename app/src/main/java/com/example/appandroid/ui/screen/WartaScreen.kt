@@ -26,12 +26,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.appandroid.data.local.entity.PengumumanEntity
 import com.example.appandroid.ui.component.EmptyState
+import com.example.appandroid.ui.component.HtmlText
 import com.example.appandroid.ui.component.IconBadge
 import com.example.appandroid.ui.component.PaperCard
 
@@ -68,7 +68,6 @@ fun WartaScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (wartaList.isNotEmpty()) {
-                        item { WartaSummary(count = wartaList.size) }
                         items(wartaList, key = { it.id }) { warta ->
                             WartaCard(pengumuman = warta)
                         }
@@ -109,38 +108,6 @@ fun WartaScreen(
 }
 
 @Composable
-private fun WartaSummary(count: Int) {
-    PaperCard(Modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = Icons.Filled.Notifications,
-                contentDescription = null,
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                size = 44,
-            )
-            Spacer(Modifier.width(14.dp))
-            Column {
-                Text(
-                    text = count.toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Warta & pengumuman jemaat",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-    }
-}
-
-@Composable
 private fun WartaCard(pengumuman: PengumumanEntity) {
     PaperCard(Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.padding(14.dp)) {
@@ -159,10 +126,11 @@ private fun WartaCard(pengumuman: PengumumanEntity) {
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
-                if (!pengumuman.isi.isNullOrBlank()) {
+                val isi = pengumuman.isi
+                if (!isi.isNullOrBlank()) {
                     Spacer(Modifier.height(4.dp))
-                    Text(
-                        text = pengumuman.isi,
+                    HtmlText(
+                        html = isi,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 3,
@@ -172,7 +140,7 @@ private fun WartaCard(pengumuman: PengumumanEntity) {
                 if (!pengumuman.tglPublish.isNullOrBlank()) {
                     Spacer(Modifier.height(6.dp))
                     Text(
-                        text = pengumuman.tglPublish,
+                        text = formatTanggalPublish(pengumuman.tglPublish),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.secondary,
                     )

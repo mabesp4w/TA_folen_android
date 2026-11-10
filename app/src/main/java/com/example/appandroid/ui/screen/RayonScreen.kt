@@ -26,8 +26,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -73,12 +71,6 @@ fun RayonScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (rayonList.isNotEmpty()) {
-                        item {
-                            RayonSummary(
-                                rayonCount = rayonList.size,
-                                jemaatCount = rayonList.sumOf { it.jumlahJemaat },
-                            )
-                        }
                         items(rayonList, key = { it.id }) { rayon ->
                             RayonCard(rayon = rayon)
                         }
@@ -113,66 +105,6 @@ fun RayonScreen(
                 ) {
                     Text("Gagal memuat data. Periksa koneksi.")
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun RayonSummary(
-    rayonCount: Int,
-    jemaatCount: Int,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        SummaryTile(
-            value = rayonCount.toString(),
-            label = "Rayon",
-            icon = Icons.Filled.LocationOn,
-            modifier = Modifier.weight(1f),
-        )
-        SummaryTile(
-            value = jemaatCount.toString(),
-            label = "Jemaat",
-            icon = Icons.Filled.Person,
-            modifier = Modifier.weight(1f),
-        )
-    }
-}
-
-@Composable
-private fun SummaryTile(
-    value: String,
-    label: String,
-    icon: ImageVector,
-    modifier: Modifier = Modifier,
-) {
-    PaperCard(modifier) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = icon,
-                contentDescription = null,
-                size = 40,
-            )
-            Spacer(Modifier.width(12.dp))
-            Column {
-                Text(
-                    text = value,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
             }
         }
     }

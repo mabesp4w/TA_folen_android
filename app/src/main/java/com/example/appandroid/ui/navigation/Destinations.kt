@@ -18,6 +18,7 @@ object Routes {
     const val BERANDA = "beranda"
     const val JADWAL = "jadwal"
     const val RENUNGAN = "renungan"
+    const val RENUNGAN_DETAIL = "renungan/{id}"
     const val WARTA = "warta"
     const val LAINNYA = "lainnya"
     const val RAYON = "rayon"
@@ -34,6 +35,8 @@ object Routes {
     const val GALERI_DETAIL = "galeri/{id}"
 
     fun galeriDetail(id: String) = "galeri/$id"
+
+    fun renunganDetail(id: String) = "renungan/$id"
 }
 
 // Item yang tampil pada bottom navigation bar.

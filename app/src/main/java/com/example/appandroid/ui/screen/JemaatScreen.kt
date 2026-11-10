@@ -25,7 +25,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -71,7 +70,6 @@ fun JemaatScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     if (jemaatList.isNotEmpty()) {
-                        item { JemaatSummary(jemaatCount = jemaatList.size) }
                         items(jemaatList, key = { it.id }) { jemaat ->
                             JemaatCard(jemaat = jemaat)
                         }
@@ -107,39 +105,6 @@ fun JemaatScreen(
                 ) {
                     Text("Gagal memuat data. Periksa koneksi.")
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun JemaatSummary(
-    jemaatCount: Int,
-    modifier: Modifier = Modifier,
-) {
-    PaperCard(modifier.fillMaxWidth()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconBadge(
-                icon = Icons.Filled.Person,
-                contentDescription = null,
-                size = 44,
-            )
-            Spacer(Modifier.width(14.dp))
-            Column {
-                Text(
-                    text = jemaatCount.toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = "Warga jemaat terdaftar",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
             }
         }
     }
